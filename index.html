@@ -6,8 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rose Flowers</title>
-    <script src="./script.js"></script>
-    <script src="./orders.js"></script>
+    <script src="https://smtpjs.com/v3/smtp.js">
+    </script>
     <link rel="stylesheet" href="./app.css">
     <!-- <link rel="stylesheet" href="./landing.css"> -->
     <link rel="stylesheet" href="./bootstrap/css/bootstrap.css">
@@ -22,6 +22,10 @@
             <div>
                 <form action="" method="POST" id="neworder" name="myForm">
                     <section><b><u>Personal Details</u></b></section>
+                    <div class="form-group">
+                        <p>Email Address:</p>
+                        <input class="form-control" type="text" id="email" name="email" placeholder="example@gmail.com" required>
+                    </div>
                     <div class="form-group">
                         <p>Your Name:</p>
                         <input class="form-control" type="text" id="userName" name="userName" placeholder="Sender's full name" required>
@@ -59,13 +63,12 @@
             <section><b><u>Payment Details</u></b></section>
             <div class="form-group">
                 <p>Payment Code (M-Pesa Code):</p>
-                <input class="form-control" type="text" name="order[paymentStatus]" placeholder="Payment code">
+                <input class="form-control" type="text" name="paymentCode" placeholder="Payment code">
             </div>
             <hr>
             <button type="submit" class="btn-lg btn-default btn-block btn-primary">Submit Order</button>
 
             </form>
-
         </div>
     </div>
     </div>
@@ -76,10 +79,22 @@
 <script>
     const form = document.forms[0];
     var dataArray;
+    var userEmail;
 
 
 
+    function confirmOrder() {
 
+        console.log("Order being checked");
+        var message;
+        var r = confirm("Sure to place Order?");
+        if (r == true) {
+            message = "Order placed successfully!";
+        } else {
+            message = "Order not placed!";
+        }
+        window.alert(message);
+    }
 
     form.addEventListener("submit", function(event) {
         event.preventDefault();
@@ -89,7 +104,9 @@
         const data = Object.fromEntries(entries);
         dataArray = [data];
         console.log(dataArray);
+        // confirmOrder();
         downloadCSV(dataArray);
+
 
     });
 
@@ -125,6 +142,7 @@
     }
 
     function downloadCSV(args) {
+        userEmail = dataArray[0].email;
         var data, filename, link;
         var csv = convertArrayOfObjectsToCSV({
             data: dataArray
@@ -143,5 +161,9 @@
         link.setAttribute('href', data);
         link.setAttribute('download', filename);
         link.click();
+        // var fileSend = link;
+        window.open('mailto:' + userEmail + '?subject=Order%20Placement&body=Hi%20at%20Rose%20Flowers.%20Please%20find%20my%20order%20of%20flowers%20and%20delivery%20details.%20Thank%20you.%0D%0A%0D%0ARegards.' + link);
+
+
     }
 </script>

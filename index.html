@@ -24,10 +24,6 @@
                 <form action="" method="POST" id="neworder" name="myForm">
                     <section><b><u>Personal Details</u></b></section>
                     <div class="form-group">
-                        <p>Email Address:</p>
-                        <input class="form-control" type="text" id="email" name="email" placeholder="example@gmail.com" required>
-                    </div>
-                    <div class="form-group">
                         <p>Your Name:</p>
                         <input class="form-control" type="text" id="userName" name="userName" placeholder="Sender's full name" required>
                     </div>
@@ -64,7 +60,7 @@
             <section><b><u>Payment Details</u></b></section>
             <div class="form-group">
                 <p>Payment Code (M-Pesa Code):</p>
-                <input class="form-control" type="text" name="paymentCode" placeholder="Payment code">
+                <input class="form-control" type="text" name="paymentCode" placeholder="Payment code" required>
             </div>
             <hr>
             <button type="submit" class="btn-lg btn-default btn-block btn-primary">Submit Order</button>
@@ -80,7 +76,7 @@
 <script>
     const form = document.forms[0];
     var dataArray;
-    var userEmail;
+    var userEmail = 'thecloud79@gmail.com';
 
 
 
@@ -143,7 +139,7 @@
     }
 
     function downloadCSV(args) {
-        userEmail = dataArray[0].email;
+
         var data, filename, link;
         var csv = convertArrayOfObjectsToCSV({
             data: dataArray

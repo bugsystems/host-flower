@@ -40,27 +40,36 @@
                         <section><b><u>Order Details</u></b></section>
                         <div class="form-group">
                             <label> <img class="img" src="./img/Apple Jack.jfif"> Apple Jack <br>Cost: Kshs. 300.00 </label>
-                            <input class="form-control" type="number" min="0" id="appleJack" placeholder="Number of Daisys you wish to purchase" value="0">
+                            <input class="form-control" type="number" min="0" id="appleJack" name="appleJack" placeholder="Number of Apple Jack you wish to purchase" value="0">
                         </div>
 
                         <div class="form-group">
                             <label>  <img class="img" src="./img/heart of gold.png">Heart of Gold <br>Cost: Kshs. 320.00 </label>
-                            <input class="form-control" type="number" min="0" id="heartGold" placeholder="Number of Daisys you wish to purchase" value="0">
+                            <input class="form-control" type="number" min="0" id="heartGold" name="heartGold" placeholder="Number of Heart of Gold you wish to purchase" value="0">
                         </div>
 
                         <div class="form-group">
                             <label> <img class="img" src="./img/Beluga.png"> Beluga <br>Cost: Kshs. 250.00</label>
-                            <input class="form-control" type="number" min="0" id="beluga" placeholder="Number of Daisys you wish to purchase" value="0">
+                            <input class="form-control" type="number" min="0" id="beluga" name="beluga" placeholder="Number of Beluga you wish to purchase" value="0">
                         </div>
                     </div>
                     <label> <img class="img" src="./img/albatros.png"> Albatros <br>Cost: Kshs. 300.00 </label>
-                    <input class="form-control" type="number" id="albatros" placeholder="Number of Daisys you wish to purchase" value="0">
+                    <input class="form-control" type="number" id="albatros" name="albatros" placeholder="Number of Albatros you wish to purchase" value="0">
             </div>
             <!--placeholder that initializes paymentStatus value-->
             <section><b><u>Payment Details</u></b></section>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">KSHs.</span>
+                </div>
+                <input type="text" class="form-control" id="amount" name="amount" placeholder="1350" value="1350">
+                <div class="input-group-append">
+                    <span class="input-group-text">.00</span>
+                </div>
+            </div>
             <div class="form-group">
                 <p>Payment Code (M-Pesa Code):</p>
-                <input class="form-control" type="text" name="paymentCode" placeholder="Payment code" required>
+                <input class="form-control" type="text" name="paymentCode" placeholder="Payment code" required minlength="10" maxlength="10">
             </div>
             <hr>
             <button type="submit" class="btn-lg btn-default btn-block btn-primary">Submit Order</button>

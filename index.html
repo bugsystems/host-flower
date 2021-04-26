@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rose Flowers</title>
-    <script src="https://smtpjs.com/v3/smtp.js">
+    <!-- <script src="https://smtpjs.com/v3/smtp.js"> -->
     </script>
     <link rel="stylesheet" href="./app.css">
     <!-- <link rel="stylesheet" href="./landing.css"> -->
@@ -25,7 +25,7 @@
                     <section><b><u>Personal Details</u></b></section>
                     <div class="form-group">
                         <p>Your Name:</p>
-                        <input class="form-control" type="text" id="userName" name="userName" placeholder="Sender's full name" required>
+                        <input class="form-control" type="text" id="userName" name="userName" placeholder="Customer's full name" required>
                     </div>
                     <div class="form-group">
                         <p>Phone Number:</p>
@@ -40,39 +40,48 @@
                         <section><b><u>Order Details</u></b></section>
                         <div class="form-group">
                             <label> <img class="img" src="./img/Apple Jack.jfif"> Apple Jack <br>Cost: Kshs. 300.00 </label>
-                            <input class="form-control" type="number" min="0" id="appleJack" name="appleJack" placeholder="Number of Apple Jack you wish to purchase" value="0">
+                            <input class="form-control" type="number" min="0" id="appleJack" name="flower" placeholder="Quantity">
                         </div>
 
                         <div class="form-group">
                             <label>  <img class="img" src="./img/heart of gold.png">Heart of Gold <br>Cost: Kshs. 320.00 </label>
-                            <input class="form-control" type="number" min="0" id="heartGold" name="heartGold" placeholder="Number of Heart of Gold you wish to purchase" value="0">
+                            <input class="form-control" type="number" min="0" id="heartGold" name="flower" placeholder="Quantity">
                         </div>
 
                         <div class="form-group">
                             <label> <img class="img" src="./img/Beluga.png"> Beluga <br>Cost: Kshs. 250.00</label>
-                            <input class="form-control" type="number" min="0" id="beluga" name="beluga" placeholder="Number of Beluga you wish to purchase" value="0">
+                            <input class="form-control" type="number" min="0" id="beluga" name="flower" placeholder="Quantity">
                         </div>
                     </div>
                     <label> <img class="img" src="./img/albatros.png"> Albatros <br>Cost: Kshs. 300.00 </label>
-                    <input class="form-control" type="number" id="albatros" name="albatros" placeholder="Number of Albatros you wish to purchase" value="0">
+                    <input class="form-control" type="number" id="albatros" name="flower" placeholder="Quantity">
+            </div>
+            <hr/>
+            <div class="form-group">
+                <button type="button" id="calc" class="btn btn-warning btn-sm" onclick="findTotal()">Calculate Order Cost</button>
+                <button type="reset" id="calc" class="btn btn-danger btn-sm">Clear Order details</button>
             </div>
             <!--placeholder that initializes paymentStatus value-->
             <section><b><u>Payment Details</u></b></section>
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text">KSHs.</span>
+            <div id="payment" onload="showPayment()">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Order Cost (KSHs).</span>
+                    </div>
+                    <input type="text" class="form-control" id="amount" name="amount" placeholder="Total cost">
+                    <div class="input-group-append">
+                        <span class="input-group-text">.00</span>
+                    </div>
                 </div>
-                <input type="text" class="form-control" id="amount" name="amount" placeholder="1350" value="1350">
-                <div class="input-group-append">
-                    <span class="input-group-text">.00</span>
+                <div class="form-group">
+                    <p>Payment Code (M-Pesa Code):</p>
+                    <input class="form-control" type="text" name="paymentCode" id="total" placeholder="M-Pesa Payment Code" minlength="10" maxlength="10" required>
+                </div>
+                <hr/>
+                <div class="form-group">
+                    <button type="submit" id="btnSend" onclick="confirmOrder()" class="btn-sm btn-success">Submit Order</button>
                 </div>
             </div>
-            <div class="form-group">
-                <p>Payment Code (M-Pesa Code):</p>
-                <input class="form-control" type="text" name="paymentCode" placeholder="Payment code" required minlength="10" maxlength="10">
-            </div>
-            <hr>
-            <button type="submit" class="btn-lg btn-default btn-block btn-primary">Submit Order</button>
 
             </form>
         </div>
@@ -86,14 +95,44 @@
     const form = document.forms[0];
     var dataArray;
     var userEmail = 'thecloud79@gmail.com';
+    var orderAmount;
 
 
+    //Functions
+
+
+    function showPayment() {
+        document.getElementById('payment').innerHTML = none;
+    }
+
+    function findTotal() {
+        // getting customer details 
+        var userName = document.getElementById('userName').value;
+        var phoneNumber = document.getElementById('phoneNumber').value;
+        var location = document.getElementById('location').value;
+        // getting order details 
+        var appleJack = Number(document.getElementById('appleJack').value) * 300;
+
+        var heartGold = Number(document.getElementById('heartGold').value) * 320;
+
+        var beluga = Number(document.getElementById('beluga').value) * 250;
+
+        var albatros = Number(document.getElementById('albatros').value) * 300;
+        orderAmount = appleJack + heartGold + beluga + albatros;
+
+        // getData();
+        document.getElementById('amount').value = orderAmount;
+        // confirmOrder(orderAmount)
+
+
+    }
 
     function confirmOrder() {
+        var orderValue = document.getElementById('amount').value;
 
         console.log("Order being checked");
         var message;
-        var r = confirm("Sure to place Order?");
+        var r = confirm("Sure to place Order of " + orderValue + "?");
         if (r == true) {
             message = "Order placed successfully!";
         } else {
@@ -109,12 +148,13 @@
         const entries = results.entries();
         const data = Object.fromEntries(entries);
         dataArray = [data];
-        console.log(dataArray);
         // confirmOrder();
         downloadCSV(dataArray);
+        // getData();
 
 
     });
+
 
     function convertArrayOfObjectsToCSV(args) {
         var result, ctr, keys, columnDelimiter, lineDelimiter, data;
@@ -153,7 +193,7 @@
         var csv = convertArrayOfObjectsToCSV({
             data: dataArray
         });
-        console.log(csv);
+
         if (csv == null) return;
 
         filename = args.filename || 'orders.csv';
@@ -162,13 +202,19 @@
             csv = 'data:text/csv;charset=utf-8,' + csv;
         }
         data = encodeURI(csv);
+        // console.log(data);
+        // var emailUser = 'mailto:thecloud79@gmail.com?subject=Order&ni_email_cfg_file=./email.config';
+        // link = document.createElement('a');
+        // link.setAttribute('href', emailUser);
+        // link.setAttribute('send', filename);
+        // link.click();
 
-        link = document.createElement('a');
-        link.setAttribute('href', data);
-        link.setAttribute('download', filename);
-        link.click();
-        // var fileSend = link;
-        window.open('mailto:' + userEmail + '?subject=Order%20Placement&body=Hi%20at%20Rose%20Flowers.%20Please%20find%20my%20order%20of%20flowers%20and%20delivery%20details.%20Thank%20you.%0D%0A%0D%0ARegards.' + link);
+        // link = document.createElement('a');
+        // link.setAttribute('href', data);
+        // link.setAttribute('download', filename);
+        // link.click();
+        // // var fileSend = link;
+        // window.open('mailto:' + userEmail + '?subject=Order%20Placement&body=Hi%20at%20Rose%20Flowers.%20Please%20find%20my%20order%20of%20flowers%20and%20delivery%20details.%20Thank%20you.%0D%0A%0D%0ARegards.' + link);
 
 
     }
